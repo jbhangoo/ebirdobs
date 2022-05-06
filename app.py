@@ -26,8 +26,7 @@ if not os.path.exists(logdir):
 logfilename = "ebird_{0}.log".format(datetime.today().strftime('%Y%m%d_%H%M%S'))
 logfilepath = os.path.join(logdir, logfilename)
 
-logging.basicConfig(filename = logfilepath, level=logging.ERROR,
-                    format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+logging.basicConfig(filename = logfilepath, level=logging.ERROR, format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 @app.route("/", methods = ['GET', 'POST'])
 def root():

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block page_title %}Log in{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body %}
+    {{ super() }}
+
+    <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4>{{status}}</h4>
+                    </div>
+                </div>
+        <div class="row">
+            <form action = "/authenticate/" method = "POST" class="form-horizontal">
+                <div class="col-md-6 col-sm-12">
+                    <label for="username" class="control-label col-2">Username:</label>
+                    <input name="username" id="username" class="form-control col-4"
+                           type="text" placeholder="Enter your username">
+                    <button type="submit" class="btn btn-primary col-offset-2 col-4">Login</button>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="password" class="control-label col-2">password:</label>
+                    <input name="password" id="password" type="password" class="form-control col-4"
+                           type="text" placeholder="Enter your password">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='js/transvax.js')}}"></script>
+{% endblock %}

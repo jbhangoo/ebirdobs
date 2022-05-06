@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.flexrow * {
+  box-sizing: border-box;
+}
+
+/* Container for flexboxes */
+.flexrow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Create two equal columns */
+.flexcolumn {
+  flex: 50%;
+  padding: 20px;
+}
+
+/* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .flexrow {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Responsive Four Column Layout with Flex</h2>
+<p><strong>Resize the browser window to see the responsive effect.</strong> On screens that are 992px wide or less, the columns will resize from four columns to two columns. On screens that are 600px wide or less, the columns will stack on top of each other instead of next to eachother.</p>
+
+<div class="flexrow">
+  <div class="flexcolumn" style="background-color:#eee;">
+    <h2>Column 1</h2>
+    <p>Some textndow to
+        ndow to see the responsive eOn screens that are 992px wide or lesndow to see the res
+        ponsive effecOn screens that are 992px wide or les
+        ee the responsive effOn screens that are 992px wide or lesndow to see the respo
+        nsive effn screens that are 992px wide or lesndow to see the responsive effec
+        screens that are 992px wide or lesndow to see the responsive effec
+        n screens that are 992px wide or lesndow to see the responsive effect.
+        n screens that are 992px wide or les..</p>
+  </div>
+
+  <div class="flexcolumn" style="background-color:#aaa;">
+    <h2>Column 2</h2>
+    <p>Some text..</p>
+  </div>
+</div>
+
+</body>
+</html>

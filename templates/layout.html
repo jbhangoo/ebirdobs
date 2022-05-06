@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.united.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mapentry.css') }}">
+    <style>
+        table, th, td {
+          padding: 5px;
+        }
+    </style>
+    <title>EBird Map</title>
+    {% block head %}{% endblock %}
+</head>
+
+<div class="container">
+    <h1 class="h1">{% block page_title %}{% endblock %}</h1>
+    <p class="p">{% block body %}{% endblock %}</p>
+</div>
+
+</html>

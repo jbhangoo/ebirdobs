@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block page_title %}Simulating {{days}} days{% endblock %}
+{% block head %}
+    {{ super() }}
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+       integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+       crossorigin=""/>
+{% endblock %}
+{% block body %}
+    {{ super() }}
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+       crossorigin=""></script>
+	<script src='https://cdn.plot.ly/plotly-2.2.0.min.js'></script>
+    <div class = "container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <img id="iWait" src="{{url_for('static', filename='img/still-loading.gif')}}"
+                     style="width:100px;height:100px;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12" style="display:none;">
+                <div id="geo" style="height:400px;"></div>
+                <div id="mapinfo"></div>
+                <table id="mapcontrols" style="width:100%;visibility:hidden;">
+                    <tr>
+                        <td><label for="dayslider">Day of Simulation:</label><br>
+                            <input id="dayslider" type="range" class="form-range" min="0" max="1" value="1"
+                                   onchange="onSliderChange()">
+                            <div id="lSlider">Simulation day:
+                                <label id="slidervalue"></label>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            <label for="poplist">Value to map:</label><br>
+                            <select id="poplist" class="form-select" onchange="onListChange()">
+                                <option id="I1" value="I1">Lassa Infected</option>
+                                <option id="I2" value="I2">Vaccine Carriers</option>
+                                <option id="total" value="total">Total Rodents</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Current progress will appear below. A new map screen will load after simulation completes.
+                    </div>
+                </div>
+                <h3>Status</h3>
+                <div id="status">Started</div>
+                <div id="stderr"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="display:none;">
+                <h3>Output</h3>
+                <div>
+                    <p>Output directory: {{ resultsdir }}</p>
+                </div>
+                <div id="stdout"></div>
+            </div>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='js/ajax.js')}}"></script>
+    <script src="{{url_for('static', filename='js/mapping.js')}}"></script>
+{% endblock %}

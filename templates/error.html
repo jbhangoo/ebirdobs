@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block page_title %}Error{% endblock %}
+{% block body %}
+    {{ super() }}
+    Application failure
+    <div>{{error}}</div>
+{% endblock %}

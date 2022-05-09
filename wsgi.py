@@ -1,5 +1,5 @@
 import sys
-path = '/home/yourusername/mysite'
+path = '/home/jbhangoo/mysite'
 if path not in sys.path:
    sys.path.insert(0, path)
 

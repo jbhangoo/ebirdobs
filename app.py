@@ -2,16 +2,16 @@ from datetime import datetime
 import json
 import logging
 import os
-import random
 
 from flask import Flask, render_template, request, session, send_file
 from werkzeug.utils import secure_filename
 
-from src.dao import DAO
-from src.perform import Perform
+import sys
+path = '/home/jbhangoo/mysite'
+if path not in sys.path:
+   sys.path.insert(0, path)
+
 from src.ebird import EbirdApi
-from src.user import User
-from src.grid import latlon_distance
 
 logdir = os.path.join(os.getcwd(), "data", "_logs")
 
@@ -51,7 +51,7 @@ def about():
 def load():
     try:
         app.logger.debug("START Loading")
-        lat = float( request.args.get('lat') )
+        lat = float(request.args.get('lat'))
         lon = float(request.args.get('lon'))
         radius = int(float(request.args.get('diam'))//2000)
         radius -= 2

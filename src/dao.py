@@ -4,7 +4,7 @@ from datetime import datetime
 from src.db import DB
 from src.db_result import DBResult
 
-db_file_location = "data/transvax.db"
+db_file_location = "data/ebirdobs.db"
 
 sql_create_role_table = """
 CREATE TABLE IF NOT EXISTS role

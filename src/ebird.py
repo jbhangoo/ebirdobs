@@ -6,6 +6,14 @@ from src.species import SpeciesCounts
 
 class EbirdApi(object):
     def __init__(self, args):
+        '''
+        Make Ebird API request and save results in locSpeciesJson string
+        :param args: dictionary of
+                    lat (latitude), lon (longitude), region (county),
+                    radius (search radius),days (days back to search),
+                    notable (boolean to only search for natable species),
+                    species (Ebird 6 character species code to search for only)
+        '''
         self.EBBaseURL = "https://api.ebird.org/v2/"
         self.EBApiKey = "h91aejb6l1hs"
         self.observationsJson = self.getEbirdObservations(
@@ -25,6 +33,11 @@ class EbirdApi(object):
             self.locSpeciesJson = json.dumps({"Error": str(ex)})
 
     def HttpGet(self, uri: str):
+        """
+        Low level internal method to perform the API call. Do not call directly
+        :param uri:
+        :return:    content of successful call or error code
+        """
         ebird_header = {"X-eBirdApiToken": self.EBApiKey }
         resp = requests.get(uri, headers=ebird_header)
 
@@ -35,47 +48,52 @@ class EbirdApi(object):
 
 
     def HttpGetEbird(self, service:str, args:dict):
-            url = self.EBBaseURL + EBServices[service]
-            # Insert actual arguments for the tokens
-            for akey,aval in args.items():
-                url = url.replace("{{" + akey + "}}", str(aval))
+        url = self.EBBaseURL + EBServices[service]
+        # Insert actual arguments for the tokens
+        for akey,aval in args.items():
+            url = url.replace("{{" + akey + "}}", str(aval))
 
-            got = self.HttpGet(url)
-            return got
+        got = self.HttpGet(url)
+        return got
 
     def getEbirdSpecies(self, speciesCode):
-            ebcode = EBSpeciesCodes[speciesCode]
-            species_url = "https://api.ebird.org/v2/ref/taxonomy/ebird?species={}&fmt=json".format(ebcode)
-            return self.HttpGet(species_url)
+        ebcode = EBSpeciesCodes[speciesCode]
+        species_url = "https://api.ebird.org/v2/ref/taxonomy/ebird?species={}&fmt=json".format(ebcode)
+        return self.HttpGet(species_url)
 
     def getEbirdObservations(self, lat, lon, region:str, radius, days, notable, species):
 
-            if species:
-                ebcode = EBSpeciesCodes[species]
-                args = { "lat": lat , "lng": lon , "speciesCode": ebcode , "dist": radius , "back": days }
-                jsonResponse = self.HttpGetEbird("locationObservationsSpecies", args)
-            elif notable == "r":
-                args = { "lat": lat , "lng": lon , "dist": radius , "back": days }
-                jsonResponse = self.HttpGetEbird("locationObservationsNotable", args)
-            elif notable == "s":
-                args = { "lat": lat , "lng": lon , "regionCode": "US-"+region[0:2] , "maxResults": "50", "back": days }
-                jsonResponse = self.HttpGetEbird("regionObservationsNotable", args)
-            elif notable == "c":
-                args = { "lat": lat , "lng": lon , "regionCode": "US-"+region , "maxResults": "50", "back": days }
-                jsonResponse = self.HttpGetEbird("regionObservationsNotable", args)
-            elif notable == "e":
-                args= { "lat": lat , "lng": lon , "regionCode": "US-"+region , "maxResults": "50", "back": days }
-                jsonResponse = self.HttpGetEbird("regionObservations", args)
-            else:
-                args = { "lat": lat , "lng": lon , "dist": radius , "back": days, "maxResults": "50" }
-                jsonResponse = self.HttpGetEbird("locationObservations", args)
-            return jsonResponse
+        if species:
+            ebcode = EBSpeciesCodes[species]
+            args = { "lat": lat , "lng": lon , "speciesCode": ebcode , "dist": radius , "back": days }
+            jsonResponse = self.HttpGetEbird("locationObservationsSpecies", args)
+        elif notable == "r":
+            args = { "lat": lat , "lng": lon , "dist": radius , "back": days }
+            jsonResponse = self.HttpGetEbird("locationObservationsNotable", args)
+        elif notable == "s":
+            args = { "lat": lat , "lng": lon , "regionCode": "US-"+region[0:2] , "maxResults": "50", "back": days }
+            jsonResponse = self.HttpGetEbird("regionObservationsNotable", args)
+        elif notable == "c":
+            args = { "lat": lat , "lng": lon , "regionCode": "US-"+region , "maxResults": "50", "back": days }
+            jsonResponse = self.HttpGetEbird("regionObservationsNotable", args)
+        elif notable == "e":
+            args= { "lat": lat , "lng": lon , "regionCode": "US-"+region , "maxResults": "50", "back": days }
+            jsonResponse = self.HttpGetEbird("regionObservations", args)
+        else:
+            args = { "lat": lat , "lng": lon , "dist": radius , "back": days, "maxResults": "50" }
+            jsonResponse = self.HttpGetEbird("locationObservations", args)
+        return jsonResponse
 
 
     def getEbirdChecklists(self, regionCode, txtLat, txtLon, radius):
-        '''
+        """
         Returns a list of EbirdChecklist
-        '''
+        :param regionCode:  County basically
+        :param txtLat:      latitude as text string
+        :param txtLon:      longitude as text string
+        :param radius:      radius to get checklists for
+        :return:
+        """
         if regionCode:
             args = { "regionCode": "US-"+regionCode, "maxResults": "100" }
             jsonResponse = self.HttpGetEbird("regionChecklists", args)

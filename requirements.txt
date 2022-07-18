@@ -1,6 +1,4 @@
 flask
 geopy
 gunicorn
-numpy
-pandas
 requests

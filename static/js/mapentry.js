@@ -43,7 +43,7 @@ function onMapChanged() {
 }
 
 function display(observations) {
-    var obsTable = "<table class='fixed_header'><thead><tr><th>Bird</th><th>Count</th><th>Days ago</th>"
+    var obsTable = "<table class='fixed_header'><thead><tr><th>Common Name</th><th>Count</th><th>Days Ago</th>"
                     +"<th>Place</th><th>R</th><th>V</th></tr></thead><tbody>";
 
     if (obsLayer !== null)

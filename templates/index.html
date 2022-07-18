@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block page_title %}EBird Recent{% endblock %}
+{% block page_title %}EBird Recent Sightings{% endblock %}
 {% block head %}
     {{ super() }}
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -18,9 +18,9 @@
             <div class="col-md-12 col-sm-12" style="height:50px;">
             </div>
         </div>
-        <form action = "/load/" method = "POST" onsubmit="onSubmit()"
+        <!--form action = "/load/" method = "POST" onsubmit="onSubmit()"
               class="form-horizontal" enctype = "multipart/form-data" target="_blank">
-        <!--div class="row slidecontainer">
+        <div class="row slidecontainer">
             <div class="col-9">
                 <label for="sDays" class="control-label">Search back this number of days:</label>
                 <input type="range" min="1" max="30" value="7" class="slider" id="sDays">
@@ -28,20 +28,20 @@
             <div class="col-3">
                 <button id="bSubmit" class="btn btn-primary col-offset-2">Redraw</button>
             </div>
-        </div-->
-        </form>
+        </div>
+        </form-->
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div id="status">{{status}}</div>
             </div>
         </div>
         <div class="row">
-            <div id="mapid" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
-            <div id="obstable" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+            <div id="mapid" class="col-lg-8 col-md-6 col-sm-12 col-xs-12"></div>
+            <div id="obstable" class="col-lg-4 col-md-6 col-sm-12 col-xs-12"></div>
         </div>
         <div class="row">
-            <div id="loclist" class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="height:50px;"></div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="height:50px;"></div>
+            <div id="loclist" class="col-lg-8 col-md-6 col-sm-12 col-xs-12" style="height:50px;"></div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" style="height:50px;"></div>
         </div>
     </div>
     <script>

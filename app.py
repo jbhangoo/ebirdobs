@@ -54,9 +54,9 @@ def load():
         lat = float(request.args.get('lat'))
         lon = float(request.args.get('lon'))
         radius = int(float(request.args.get('diam'))//2000)
-        radius -= 2
+        radius -= 1
         if (radius < 1) or (radius > 50):
-            raise Exception("Bad search area")
+            raise Exception("Invalid search area")
         days = int(request.args.get('days'))
         req = {
             "lat": lat,

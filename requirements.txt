@@ -1,4 +1,6 @@
 flask
 geopy
 gunicorn
+plotly
 requests
+yfinance

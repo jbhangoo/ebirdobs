@@ -6,12 +6,14 @@ import os
 from flask import Flask, render_template, request, session, send_file
 from werkzeug.utils import secure_filename
 
+from src.finance.benchmark import Benchmark, TICKERFILE
+
 import sys
 path = '/home/jbhangoo/mysite'
 if path not in sys.path:
    sys.path.insert(0, path)
 
-from src.ebird import EbirdApi
+from src.ebird.ebird import EbirdApi
 
 logdir = os.path.join(os.getcwd(), "data", "_logs")
 
@@ -41,6 +43,12 @@ def root():
     }
     ebird = EbirdApi(req)
     return render_template("index.html", obs=ebird.locSpecies.locations)
+
+@app.route("/finance/")
+def finance():
+    benchmark = Benchmark()
+    charts = benchmark.get_charts()
+    return render_template("finance.html", graphJSON=charts)
 
 @app.route("/about/")
 def about():

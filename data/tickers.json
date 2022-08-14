@@ -1,0 +1,9 @@
+[
+["Index_Blue_Chip", "Dow Jones Industrial Avg", "^DJI"],
+["Index_Total_Market", "Wilshire 5000", "^W5000"],
+["Index_Large_Cap", "S&P 500", "^GSPC"],
+["Index_Mid_Cap", "S&P 400", "^SP400"],
+["Index_Small_Cap", "Russell 2000", "^RUT"],
+["TBill_5_yr", "Treasury Yield 5 Years", "^FVX"],
+["TBill_30_yr", "Treasury Yield 30 Years", "^TYX"]
+]

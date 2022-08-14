@@ -2,7 +2,7 @@ from geopy.distance import geodesic
 import json
 import requests
 
-from src.species import SpeciesCounts
+from src.ebird.species import SpeciesCounts
 
 class EbirdApi(object):
     def __init__(self, args):

@@ -1,5 +1,5 @@
 import sqlite3
-from src.db_result import DBResult
+from src.db.db_result import DBResult
 
 class DB():
     def __init__(self, db_file:str):
@@ -14,7 +14,7 @@ class DB():
         """
         Execute sql command and return raw response
         :param sql:
-        :return:
+        :return: All rows returned by the sql query
         """
         try:
             with sqlite3.connect(self.dbfile) as conn:

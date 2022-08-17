@@ -23,7 +23,11 @@ class Benchmark(object):
         benchmark_id = self.benchmark_ids[benchmark]
         if benchmark_id:
             today = datetime.datetime.today()
-            monthago = today + datetime.timedelta(days=-30)
+            #monthago = today + datetime.timedelta(days=-30)
+
+            #today = today + datetime.timedelta(days=-450)
+            monthago = today + datetime.timedelta(days=-630)
+
             results = self.db.get_prices(benchmark_id, monthago, today)
             if results.status:
                 return results.rows
@@ -37,10 +41,12 @@ class Benchmark(object):
         for benchmark in self.benchmarks:
             symbol = benchmark[2]
             prices = self.get_prices_recent(symbol)
-            changes = [prices.values[i+1]/prices.values[i] for i in range(len(prices.values)-1)]
+            n_shares = 1000/prices.values[0]
+            values = [price/prices.values[0] for price in prices.values]
+
             data =  dict(
                     x = prices.index,  # assign x as the dataframe column 'x'
-                    y = changes,
+                    y = values,
                     name = benchmark[0],
                     type = 'line'
             )

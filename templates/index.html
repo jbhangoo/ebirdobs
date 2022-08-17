@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
-{% block page_title %}EBird Recent Sightings{% endblock %}
+{% block page_title %}Recent EBird Sightings{% endblock %}
 {% block head %}
     {{ super() }}
-    <title>EBird Map</title>
+    <title>EBird Sightings</title>
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
        crossorigin=""/>
@@ -37,12 +37,15 @@
             </div>
         </div>
         <div class="row">
-            <div id="mapid" class="col-lg-8 col-md-6 col-sm-12 col-xs-12"></div>
-            <div id="obstable" class="col-lg-4 col-md-6 col-sm-12 col-xs-12"></div>
+            <div id="mapid" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div id="obstable"></div>
+                <div style="height:10px;"></div>
+                <div id="loclist"></div>
+            </div>
         </div>
         <div class="row">
-            <div id="loclist" class="col-lg-8 col-md-6 col-sm-12 col-xs-12" style="height:50px;"></div>
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" style="height:50px;"></div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:50px;"></div>
         </div>
     </div>
     <script>

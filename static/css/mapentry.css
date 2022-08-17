@@ -3,6 +3,14 @@
     cursor: crosshair;
 }
 
+#obstable {
+    height: 300px;
+}
+
+#loclist {
+    height: 170px;
+}
+
 #map {
     cursor: crosshair;
     padding: 5px;
@@ -67,7 +75,7 @@ border-collapse: collapse;
 display: block;
 width: 100%;
 overflow: auto;
-height: 400px;
+height: 250px;
 }
 .fixed_header thead tr {
 display: block;

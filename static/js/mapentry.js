@@ -2,8 +2,8 @@ var midGen = 1;
 var markers = [];
 var locLists = [];
 var obsLayer = null;
-var curLoc;
 var curMarker;
+var mymap;
 
 // User location marker
 const curIcon = L.icon({
@@ -18,7 +18,36 @@ const obsIcon = L.icon({
     iconAnchor:   [8, 8], // point of the icon which will correspond to marker's location
 });
 
-function onMapChanged() {
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+            getCurrentLocation( L.latLng(pos.coords.latitude , pos.coords.longitude) );
+        },
+        () => {
+            getCurrentLocation( L.latLng(32.2102866,-110.9235907) );
+            document.getElementById("status").innerHTML =
+                "No location found. Showing Tucson Audubon Society location";
+        }
+    );
+} else {
+    getCurrentLocation( L.latLng(32.2102866,-110.9235907) );
+    document.getElementById("status").innerHTML = "Location not possible. Showing Tucson Audubon Society location";
+}
+
+function getCurrentLocation(curLoc) {
+    mymap = L.map('mapid', {center: curLoc, zoom: 11, minZoom: 7, tap: false});
+    curMarker = new L.circleMarker(curLoc,{radius: 20, color: 'red', weight: 3}).addTo(mymap);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo( mymap );
+    mymap.on('zoomend', getEbirdObs);
+    mymap.on('dragend', getEbirdObs);
+    getEbirdObs();
+
+    //new L.marker(curLoc, {icon: curIcon}).addTo(mymap);
+    //display(observations);
+}
+
+function getEbirdObs() {
     document.getElementById("obstable").innerHTML = "";
 
     const northwest = mymap.getBounds().getNorthWest();
@@ -38,8 +67,6 @@ function onMapChanged() {
                 display(observations);
             });
         });
-
-    document.getElementById("status").innerHTML = "Data for selected point";
 }
 
 function display(observations) {
@@ -134,26 +161,6 @@ function onTableClick(mid) {
     curMarker.setLatLng(curLoc);
 }
 
-function getCurrentLocation() {
-  curLoc = L.latLng(32.2102866,-110.9235907);
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(pos => {curLoc = L.latLng(pos.coords.latitude , pos.coords.longitude);});
-  } else {
-    document.getElementById("status").innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-
-getCurrentLocation();
-var mymap = L.map('mapid', {center: curLoc, zoom: 11, minZoom: 7, tap: false});
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-}).addTo( mymap );
-mymap.on('zoomend', onMapChanged);
-mymap.on('dragend', onMapChanged);
-
-curMarker = new L.circleMarker(curLoc,{radius: 20, color: 'red', weight: 3}).addTo(mymap);
- //new L.marker(curLoc, {icon: curIcon}).addTo(mymap);
-display(observations);
 
 /*
 comName: "Acorn Woodpecker"

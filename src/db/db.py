@@ -34,7 +34,7 @@ class DB():
         except Exception as error:
             return DBResult(False, [str(error)])
 
-    def select(self, table:str, columns:list, criteria:str=None):
+    def select(self, table:str, columns:list, criteria:str='', order:str=''):
         """
         Select all rows from given table and columns, according to criteria
         :param table:       table to query
@@ -46,6 +46,8 @@ class DB():
         sql = "SELECT {} FROM {}".format(','.join(columns), table)
         if criteria:
             sql += " WHERE {}".format(criteria)
+        if order:
+            sql += " ORDER BY {}".format(order)
         result = self.exec_sql(sql)
         return result
 

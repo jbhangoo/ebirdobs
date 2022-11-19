@@ -44,6 +44,20 @@ def root():
     ebird = EbirdApi(req)
     return render_template("index.html", obs=ebird.locSpecies.locations)
 
+@app.route("/tucson/", methods = ['GET', 'POST'])
+def tucson():
+    req = {
+        "lat": 32.2,
+        "lon": -110.9,
+        "region": "Pima",
+        "radius": 15,
+        "days": 7,
+        "notable": "0",
+        "species": ''
+    }
+    ebird = EbirdApi(req)
+    return render_template("tucson.html", obs=ebird.locSpecies.locations)
+
 @app.route("/finance/")
 def finance():
     benchmark = Benchmark()
@@ -55,10 +69,10 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/load/", methods = ['GET'])
-def load():
+@app.route("/ebirdobs/", methods = ['GET'])
+def ebirdobs():
     try:
-        app.logger.debug("START Loading")
+        app.logger.debug("START ebirdobs")
         lat = float(request.args.get('lat'))
         lon = float(request.args.get('lon'))
         radius = int(float(request.args.get('diam'))//2000)
@@ -66,6 +80,9 @@ def load():
         if (radius < 1) or (radius > 50):
             raise Exception("Invalid search area")
         days = int(request.args.get('days'))
+        species = str(request.args.get('species'))
+        if species is None:
+            species = ''
         req = {
             "lat": lat,
             "lon": lon,
@@ -73,14 +90,13 @@ def load():
             "radius": radius,
             "days": days,
             "notable": "0",
-            "species": ''
+            "species": species
         }
         ebird = EbirdApi(req)
         return ebird.locSpeciesJson
     except Exception as ex:
-        errmsg = []
-        errmsg.append(str(ex))
-        return json.dumps(errmsg);
+        errmsg = {'Error':str(ex)}
+        return json.dumps(errmsg)
 
 
 @app.errorhandler(401)

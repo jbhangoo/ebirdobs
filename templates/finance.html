@@ -32,8 +32,154 @@
     </div>
     <div id="plots"></div>
     <script type="text/javascript">
-        var graphs = {{graphJSON | safe}};
-        Plotly.newPlot('plots', graphs, {});
+        // Array is valid if it has some non-null entries
+        const isValid = (x) => x != null;
+        const graphs = {{graphJSON | safe}};
+        const root = document.getElementById('plots');
+
+        for (const i in graphs) {
+            var header = document.createElement('h3');
+            header.innerHTML = graphs[i].name;
+            root.appendChild(header);
+            var div = document.createElement('div');
+            const divid = 'container'+i.toString();
+            div.id = divid;
+            var traces = [];
+            if (graphs[i].y.some(isValid))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].y,
+                    hoverinfo:'skip',
+                    mode: 'markers',
+                    name: graphs[i].name,
+                    marker: {
+                        color:'#777777',
+                        size:2,
+                        symbol:'x'
+                    }
+                });
+            if ((graphs[i].smoothed) && (graphs[i].smoothed.some(isValid)))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].smoothed,
+                    hoverinfo:'skip',
+                    mode: 'lines',
+                    name: 'Avg',
+                    line: {
+                        color: '#aaaaaa'
+                    }
+                });
+            if (graphs[i].support.some(isValid))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].support,
+                    hoverinfo:'skip',
+                    mode: 'markers',
+                    name: 'Sell',
+                    marker: {
+                        color: 'mediumgreen',
+                        size:11,
+                        symbol:'star-triangle-down',
+                        line: {width:3}
+                    }
+                });
+            if (graphs[i].resistance.some(isValid))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].resistance,
+                    hoverinfo:'skip',
+                    mode: 'markers',
+                    name: 'Buy',
+                    marker: {
+                        color: 'mediumgreen',
+                        size:11,
+                        symbol:'star-triangle-up',
+                        line: {width:3}
+                    }
+                });
+            if (graphs[i].avg50 && (graphs[i].avg50.some(isValid)))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].avg50,
+                    hoverinfo:'skip',
+                    mode: 'lines',
+                    name: '50 day',
+                    line: {
+                        color: 'MediumBlue',
+                        dash: 'dash'
+                    }
+                });
+            if (graphs[i].avg200 && (graphs[i].avg200.some(isValid)))
+            traces.push( {
+                x: graphs[i].x,
+                y: graphs[i].avg200,
+                hoverinfo:'skip',
+                mode: 'lines',
+                name: '200 day',
+                line: {
+                    color: 'Blue'
+                }
+            });
+            if (graphs[i].bull.some(isValid))
+            traces.push({
+                x: graphs[i].x,
+                y: graphs[i].bull,
+                hoverinfo:'skip',
+                mode: 'markers',
+                name: 'Bull',
+                marker: {
+                    color:'darkgreen',
+                    size:12,
+                    symbol:'triangle-up-open',
+                    line: {width:3}
+                }
+            });
+            if (graphs[i].bear.some(isValid))
+            traces.push( {
+                x: graphs[i].x,
+                y: graphs[i].bear,
+                hoverinfo:'skip',
+                mode: 'markers',
+                name: 'Bear',
+                marker: {
+                    color: 'darkred',
+                    size:11,
+                    symbol:'triangle-down-open',
+                    line: {width:3}
+                }
+            });
+            if (graphs[i].buy && (graphs[i].buy.some(isValid)))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].buy,
+                    hoverinfo:'skip',
+                    mode: 'markers',
+                    name: 'Buy',
+                    marker: {
+                        color: 'mediumgreen',
+                        size:11,
+                        symbol:'star-triangle-up',
+                        line: {width:3}
+                    }
+                });
+            if (graphs[i].sell && (graphs[i].sell.some(isValid)))
+                traces.push( {
+                    x: graphs[i].x,
+                    y: graphs[i].sell,
+                    hoverinfo:'skip',
+                    mode: 'markers',
+                    name: 'Sell',
+                    marker: {
+                        color: 'mediumgreen',
+                        size:11,
+                        symbol:'star-triangle-down',
+                        line: {width:3}
+                    }
+                });
+
+            root.appendChild(div);
+            Plotly.newPlot(divid, traces, {});
+        }
     </script>
     <script src="{{url_for('static', filename='js/finance.js')}}"></script>
 {% endblock %}

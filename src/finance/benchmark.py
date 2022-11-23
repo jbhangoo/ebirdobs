@@ -33,7 +33,7 @@ class Benchmark(object):
             testdate = datetime.date(2020, 10, 29)
 
             firstday = datetime.date(2016, 1, 1)
-            lastday = datetime.date(2022, 11, 11)
+            lastday = datetime.date(2022, 11, 23)
             yeatsago = firstday + datetime.timedelta(days=-450)
 
             prices = self.db.get_prices(benchmark_id, benchmark, testdate, today)

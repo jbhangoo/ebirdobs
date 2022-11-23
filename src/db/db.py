@@ -13,8 +13,13 @@ class DB():
     def exec_sql(self, sql:str, args:list = None):
         """
         Execute sql command and return raw response
-        :param sql:
-        :return: All rows returned by the sql query
+        :param sql: SQL command
+        :param args: arguments to use with sql
+        :return: DBResult object
+                status = result of SQL command
+                rows = All rows returned by the sql query
+                rowid = Primary key of most recently added row. In the case of
+                executing an INSERT command it is the row just added
         """
         try:
             with sqlite3.connect(self.dbfile) as conn:

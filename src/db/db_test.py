@@ -1,5 +1,5 @@
 import os
-from src.dao import DAO
+from src.ebird.dao import DAO
 
 dbfilename = os.path.join(os.getcwd(), "../..", "data", "ebirdobs.db")
 

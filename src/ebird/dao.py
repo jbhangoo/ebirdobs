@@ -1,7 +1,7 @@
 import hashlib
 from datetime import datetime
 
-from src.db import DB
+from src.db.db import DB
 from src.db.db_result import DBResult
 
 db_file_location = "data/ebirdobs.db"

@@ -51,7 +51,7 @@ def tucson():
         "lon": -110.9,
         "region": "Pima",
         "radius": 15,
-        "days": 7,
+        "days": 30,
         "notable": "0",
         "species": ''
     }

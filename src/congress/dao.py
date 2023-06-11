@@ -67,6 +67,26 @@ on rollcall.id=vote.rollcall_id
 ORDER BY voted_on
 """
 
+sql_get_votes_by_congress_number = """
+select voted_on, congress_number, rollcall_number, name, vote
+from rollcall INNER JOIN 
+    (vote INNER JOIN member
+    on vote.member_id=member.member_id)
+on rollcall.id=vote.rollcall_id
+WHERE congress_number={}
+ORDER BY voted_on
+"""
+
+sql_get_votes_by_dates = """
+select voted_on, congress_number, rollcall_number, name, vote
+from rollcall INNER JOIN 
+    (vote INNER JOIN member
+    on vote.member_id=member.member_id)
+on rollcall.id=vote.rollcall_id
+WHERE voted_on BETWEEN {0} and {1}
+ORDER BY voted_on
+"""
+
 class DAO():
 
     def __init__(self, dbfilename):
@@ -119,8 +139,13 @@ class DAO():
         timestamp = datetime.timestamp(datetime.now())
         return self.db.insert('vote', ['member_id', 'rollcall_id', 'vote', 'created_on'], [member_id, rollcall_id, vote, timestamp])
 
-    def get_votes(self):
-        return self.db.exec_sql(sql_get_votes)
+    def get_votes(self, congress_number=None, qdates:tuple=None):
+        if congress_number:
+            return self.db.exec_sql(sql_get_votes_by_congress_number.format(congress_number))
+        elif qdates:
+            return self.db.exec_sql(sql_get_votes_by_dates.format(qdates[0], qdates[1]))
+        else:
+            return self.db.exec_sql(sql_get_votes)
 
     def delete_vote(self, result_id):
         return self.db.delete('result', "id={0} ".format(result_id))

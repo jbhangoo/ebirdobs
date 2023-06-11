@@ -87,10 +87,15 @@ def format_name(first_name, middle_name, last_name, suffix):
         name += ' ' + suffix
     return name
 
+"""
+UPDATE rollcall
+SET voted_on = "2021-07-20 18:01:01.000000"
+WHERE id=566
+"""
 
-get_all_votes(2022,1)
+get_all_votes(2021, 2)
 
 done = {
     2022:[ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ],
-    2021:[  ]
+    2021:[ 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 ]
 }

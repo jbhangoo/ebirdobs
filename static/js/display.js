@@ -2,7 +2,7 @@ var midGen = 1;
 var markers = [];
 var locLists = [];
 var obsLayer = null;
-var curMarker;
+
 var mymap;
 
 // User location marker
@@ -19,14 +19,23 @@ const obsIcon = L.icon({
 });
 
 
-function getCurrentLocation(curLoc) {
+function getCurrentLocation(curLoc, freeze) {
     mymap = L.map('mapid', {center: curLoc, zoom: 11, minZoom: 7, tap: false});
-    curMarker = new L.circleMarker(curLoc,{radius: 20, color: 'red', weight: 3}).addTo(mymap);
+    // const curMarker = new L.circleMarker(curLoc,{radius: 20, color: 'red', weight: 3}).addTo(mymap);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo( mymap );
-    mymap.on('zoomend', getEbirdObs);
-    mymap.on('dragend', getEbirdObs);
+    if (freeze) {
+        mymap.dragging.disable();
+        mymap.zoomControl.disable();
+        mymap.doubleClickZoom.disable();
+        mymap.scrollWheelZoom.disable();
+        mymap.boxZoom.disable();
+        mymap.keyboard.disable();
+    } else {
+        mymap.on('zoomend', getEbirdObs);
+        mymap.on('dragend', getEbirdObs);
+    }
     getEbirdObs();
 
     //new L.marker(curLoc, {icon: curIcon}).addTo(mymap);

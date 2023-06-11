@@ -19,22 +19,6 @@
             <div class="col-md-12 col-sm-12" style="height:50px;">
             </div>
         </div>
-        <form action = "/load/" method = "POST" onsubmit="onSubmit()"
-              class="form-horizontal" enctype = "multipart/form-data" target="_blank">
-        <div class="row slidecontainer">
-            <div class="col-5">
-                <label for="sDays" class="control-label">Search back this many days:</label>
-                <input type="range" min="1" max="30" value="7" class="slider" id="sDays">
-            </div>
-            <div class="col-5">
-                <label for="ddlSpecies" class="control-label">Find this bird:</label>
-                <input type="text" id="ddlSpecies">
-            </div>
-            <div class="col-2">
-                <button id="bSubmit" class="btn btn-primary col-offset-2">Redraw</button>
-            </div>
-        </div>
-        </form>
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div id="status">{{status}}</div>
@@ -42,11 +26,27 @@
         </div>
         <div class="row">
             <div id="mapid" class="col-lg-9 col-md-9 col-sm-12 col-xs-12"></div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div id="obstable"></div>
                 <div style="height:10px;"></div>
                 <div id="loclist"></div>
             </div>
+        </div>
+        <div class="row">
+            <form action = "/load/" method = "POST" onsubmit="onSubmit()"
+            class="form-horizontal" enctype = "multipart/form-data" target="_blank">
+                <div class="col-5 slidecontainer">
+                    <label for="sDays" class="control-label">Search back this many days:</label>
+                    <input type="range" min="1" max="30" value="7" class="slider" id="sDays">
+                </div>
+                <div class="col-5">
+                    <label for="ddlSpecies" class="control-label">Find this bird:</label>
+                    <input type="text" id="ddlSpecies">
+                </div>
+                <div class="col-2">
+                    <button id="bSubmit" class="btn btn-primary col-offset-2">Redraw</button>
+                </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="height:50px;"></div>
@@ -77,8 +77,8 @@
             {% endfor %}
         {% endif %}
 
-        getCurrentLocation( L.latLng(32.2902866,-110.8535907) );
-        //getCurrentLocation( L.latLng(32.2202866,-110.6235907) );
+        getCurrentLocation( L.latLng(32.2902866,-110.8535907), true );
+        //getCurrentLocation( L.latLng(32.2202866,-110.6235907), true );
 
     </script>
 {% endblock %}

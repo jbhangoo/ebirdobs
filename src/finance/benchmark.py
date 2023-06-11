@@ -30,15 +30,16 @@ class Benchmark(object):
         benchmark_id = self.benchmark_ids[benchmark]
         if benchmark_id:
             today = datetime.datetime.today()
-            testdate = datetime.date(2020, 10, 29)
+            testdate = datetime.date(2021, 1, 15)
 
             firstday = datetime.date(2016, 1, 1)
-            lastday = datetime.date(2022, 11, 23)
+            lastday = datetime.date(2023, 6, 12)
             yeatsago = firstday + datetime.timedelta(days=-450)
 
-            prices = self.db.get_prices(benchmark_id, benchmark, testdate, today)
-            #prices = self.db.get_prices(benchmark_id, benchmark, firstday, lastday)
             #prices = self.db.get_prices(benchmark_id, benchmark, lastday, today)
+            prices = self.db.get_prices(benchmark_id, benchmark, testdate, today)
+
+            #prices = self.db.get_prices(benchmark_id, benchmark, firstday, lastday)
             return prices
         else:
             return {'error': 'benchmark {} not supported'.format(benchmark)}
@@ -202,6 +203,8 @@ class Benchmark(object):
         max_idxs = argrelextrema(prices, np.greater_equal, order=window)[0]
         # Clip off values outside the window
         min_idxs = allmin_idxs[window-2:-window+2]
+        if (len(min_idxs) == 0) or (len(max_idxs) == 0):
+            return ([], [])
         min_flag = min_idxs[0] < max_idxs[0]
 
         pprint(min_idxs)

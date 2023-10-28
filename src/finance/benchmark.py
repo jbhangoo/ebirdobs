@@ -30,10 +30,10 @@ class Benchmark(object):
         benchmark_id = self.benchmark_ids[benchmark]
         if benchmark_id:
             today = datetime.datetime.today()
-            testdate = datetime.date(2021, 1, 15)
+            testdate = datetime.date(2021, 8, 15)
 
             firstday = datetime.date(2016, 1, 1)
-            lastday = datetime.date(2023, 6, 12)
+            lastday = datetime.date(2023, 10, 28)
             yeatsago = firstday + datetime.timedelta(days=-450)
 
             #prices = self.db.get_prices(benchmark_id, benchmark, lastday, today)

@@ -39,10 +39,22 @@
         <div class="row">
             <div id="mapid" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-check form-switch" style="border:1px dotted gray">
+                  <input class="form-check-input" type="checkbox" id="flexRare" checked
+                    onchange="getEbirdObs()">
+                  <label class="form-check-label" for="flexRare">Only show notables</label>
+                </div>
+                <div style="height:10px;"></div>
+                <div class="form-check form-switch" style="border:1px dotted gray">
+                    <label class="form-check-label" for="rDays">Number of days back: <span id="ndays">7</span></label>
+                    <input type="range" id="rDays" min="1" max="10" value="7" width="10"
+                           onchange="document.getElementById('ndays').innerHTML = document.getElementById('rDays').value">
+                </div>
+                <div style="height:10px;"></div>
                 <div id="obstable"></div>
                 <div style="height:10px;"></div>
-                <div id="loclist"></div>
             </div>
+
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:50px;"></div>
@@ -79,12 +91,12 @@
                 () => {
                     getCurrentLocation( L.latLng(32.2102866,-110.9235907) );
                     document.getElementById("status").innerHTML =
-                        "No location found. Showing Tucson Audubon Society location";
+                        "Location not available. Showing Tucson Arizona";
                 }
             );
         } else {
             getCurrentLocation( L.latLng(32.2102866,-110.9235907) );
-            document.getElementById("status").innerHTML = "Location not possible. Showing Tucson Audubon Society location";
+            document.getElementById("status").innerHTML = "Location not available. Showing Tucson Arizona";
         }
 
     </script>

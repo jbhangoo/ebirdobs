@@ -10,9 +10,10 @@ function getEbirdObs() {
     const center = mymap.getCenter();
     const lat = center.lat;
     const lon = center.lng;
+    const rare = document.getElementById('flexRare').checked?"r":"";
 
     // To loading the jQuery code "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
-    const url = `/ebirdobs?lat=${lat}&lon=${lon}&diam=${diam}&days=7&species=`;
+    const url = `/ebirdobs?lat=${lat}&lon=${lon}&diam=${diam}&days=7&rare=${rare}&species=`;
     fetch(url)
         .then(function (response) {
             response.json().then(function (observations) {

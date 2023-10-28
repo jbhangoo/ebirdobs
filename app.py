@@ -80,6 +80,7 @@ def ebirdobs():
         if (radius < 1) or (radius > 50):
             raise Exception("Invalid search area")
         days = int(request.args.get('days'))
+        notabale = request.args.get('rare')
         species = str(request.args.get('species'))
         if species is None:
             species = ''
@@ -89,7 +90,7 @@ def ebirdobs():
             "region": "Pima",
             "radius": radius,
             "days": days,
-            "notable": "0",
+            "notable": notabale,
             "species": species
         }
         ebird = EbirdApi(req)

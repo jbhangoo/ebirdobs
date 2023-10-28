@@ -3,10 +3,6 @@
     cursor: crosshair;
 }
 
-#obstable {
-    height: 300px;
-}
-
 #loclist {
     height: 170px;
 }
@@ -67,15 +63,12 @@ body {
 /* Fixed Header table with scrollable body */
 
 .fixed_header {
-width: 400px;
-table-layout: fixed;
 border-collapse: collapse;
 }
 .fixed_header tbody {
 display: block;
 width: 100%;
 overflow: auto;
-height: 250px;
 }
 .fixed_header thead tr {
 display: block;
